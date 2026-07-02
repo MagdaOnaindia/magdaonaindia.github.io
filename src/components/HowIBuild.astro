@@ -1,0 +1,119 @@
+---
+import TypeIcon from './icons/TypeIcon.astro';
+
+const steps = [
+  {
+    icon: 'experiment',
+    title: 'Spec it',
+    text: 'I write the spec and the plan. The product thinking is the part that can’t be delegated.',
+  },
+  {
+    icon: 'ai-agent',
+    title: 'Build it with agents',
+    text: 'AI agents implement batch by batch. I review every line that crosses an architecture boundary.',
+  },
+  {
+    icon: 'platform',
+    title: 'Own it',
+    text: 'Everything deploys to my own self-hosted platform — a PaaS I built on my own hardware.',
+  },
+  {
+    icon: 'product',
+    title: 'Ship it',
+    text: 'Public URL, real users (often just me — the most demanding one), and iteration.',
+  },
+] as const;
+---
+
+<section id="how-i-build" class="section" aria-labelledby="how-title">
+  <div class="container">
+    <p class="section-kicker">the workflow</p>
+    <h2 id="how-title">How I build</h2>
+    <ol class="steps">
+      {
+        steps.map(({ icon, title, text }) => (
+          <li class="step">
+            <span class="step-icon">
+              <TypeIcon type={icon} size={26} />
+            </span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="positioning">
+      The interesting question isn't <em>“did AI write it?”</em> — it's
+      <em>“who decided what to build, and does it run?”</em>
+    </p>
+  </div>
+</section>
+
+<style>
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--s-6);
+    list-style: none;
+    margin: var(--s-8) 0;
+    padding: 0;
+    counter-reset: step;
+  }
+
+  .step {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: var(--s-6);
+    background: var(--bg-raised);
+    counter-increment: step;
+    transition: border-color 0.2s ease;
+  }
+
+  .step:hover {
+    border-color: var(--accent-2);
+  }
+
+  .step::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    top: var(--s-4);
+    right: var(--s-4);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+  }
+
+  .step-icon {
+    display: inline-flex;
+    color: var(--accent-2);
+    margin-bottom: var(--s-3);
+    transition: transform 0.2s ease;
+  }
+
+  .step:hover .step-icon {
+    transform: translateY(-3px);
+  }
+
+  .step h3 {
+    margin-bottom: var(--s-2);
+  }
+
+  .step p {
+    color: var(--ink-muted);
+    font-size: 0.9375rem;
+    margin: 0;
+  }
+
+  .positioning {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    max-width: 56ch;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .step:hover .step-icon {
+      transform: none;
+    }
+  }
+</style>

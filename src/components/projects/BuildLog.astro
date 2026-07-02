@@ -1,0 +1,124 @@
+---
+interface Props {
+  log: { step: string; detail: string }[];
+}
+const { log } = Astro.props;
+---
+
+<div class="buildlog">
+  <div class="buildlog-bar" aria-hidden="true">
+    <span></span><span></span><span></span>
+    <code>build.log</code>
+  </div>
+  <ol class="buildlog-lines">
+    {
+      log.map(({ step, detail }) => (
+        <li class="buildlog-line">
+          <code class="buildlog-prompt" aria-hidden="true">
+            magda@torre:~$
+          </code>
+          <code class="buildlog-step">{step}</code>
+          <span class="buildlog-detail">{detail}</span>
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<style>
+  .buildlog {
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-block: var(--s-8);
+  }
+
+  .buildlog-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--s-2) var(--s-4);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .buildlog-bar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink-muted);
+  }
+
+  .buildlog-bar code {
+    margin-left: var(--s-2);
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+  }
+
+  .buildlog-lines {
+    list-style: none;
+    margin: 0;
+    padding: var(--s-4) var(--s-6);
+    display: grid;
+    gap: var(--s-3);
+  }
+
+  .buildlog-line {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 0.4s ease-out,
+      transform 0.4s ease-out;
+  }
+
+  .buildlog-line.shown {
+    opacity: 1;
+    transform: none;
+  }
+
+  .buildlog-prompt {
+    color: var(--accent-2);
+    margin-right: var(--s-2);
+  }
+
+  .buildlog-step {
+    color: var(--accent);
+    font-weight: 700;
+    margin-right: var(--s-2);
+  }
+
+  .buildlog-detail {
+    color: var(--ink-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .buildlog-line {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Reveal lines one by one as the log scrolls into view.
+  const lines = document.querySelectorAll('.buildlog-line');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    lines.forEach((l) => l.classList.add('shown'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          const idx = [...lines].indexOf(entry.target);
+          setTimeout(() => entry.target.classList.add('shown'), idx * 140);
+        });
+      },
+      { threshold: 0.3 },
+    );
+    lines.forEach((l) => io.observe(l));
+  }
+</script>

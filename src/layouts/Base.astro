@@ -1,0 +1,85 @@
+---
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import CommandPalette from '../components/palette/CommandPalette';
+import { getCollection } from 'astro:content';
+
+const paletteProjects = (await getCollection('projects'))
+  .toSorted((a, b) => a.data.order - b.data.order)
+  .map(({ id, data }) => ({ slug: id, title: data.title }));
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Magdalena Onaindia — AI product builder in Bilbao',
+  description = 'Software engineer turned AI product builder. I ship real products with AI agents — and host them on my own hardware in Bilbao.',
+} = Astro.props;
+
+const ogImage = new URL('og/default.png', Astro.site);
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      // Runs before first paint: resolve theme from localStorage -> OS -> light. Prevents FOUC.
+      (() => {
+        const stored = localStorage.getItem('theme');
+        const theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <CommandPalette client:idle projects={paletteProjects} />
+    <script>
+      // Shared toast helper: any component can dispatch `app:toast` with { detail: string }.
+      let toastTimer: ReturnType<typeof setTimeout> | undefined;
+      window.addEventListener('app:toast', (e) => {
+        document.querySelector('.toast')?.remove();
+        clearTimeout(toastTimer);
+        const el = document.createElement('div');
+        el.className = 'toast';
+        el.setAttribute('role', 'status');
+        el.setAttribute('aria-live', 'polite');
+        el.textContent = (e as CustomEvent<string>).detail;
+        document.body.append(el);
+        toastTimer = setTimeout(() => el.remove(), 4000);
+      });
+    </script>
+  </body>
+</html>

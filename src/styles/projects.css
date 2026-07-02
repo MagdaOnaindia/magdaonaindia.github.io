@@ -1,0 +1,300 @@
+/* Styles for the ProjectGrid + AiBuildMeter React islands
+   (React components can't use Astro scoped styles). */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- filters ---------- */
+.pg-filters,
+.pg-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.pg-filters {
+  margin-bottom: var(--s-3);
+}
+
+.pg-tags {
+  margin-bottom: var(--s-8);
+}
+
+.pg-type,
+.pg-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding: 0 var(--s-4);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.pg-tag {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  min-height: 36px;
+  color: var(--ink-muted);
+}
+
+.pg-type:hover,
+.pg-tag:hover {
+  border-color: var(--accent);
+}
+
+.pg-type[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+:root[data-theme='dark'] .pg-type[aria-pressed='true'] {
+  color: #14100f;
+}
+
+.pg-tag[aria-pressed='true'] {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  color: #fff;
+}
+
+:root[data-theme='dark'] .pg-tag[aria-pressed='true'] {
+  color: #0f1216;
+}
+
+/* ---------- grid + cards ---------- */
+.pg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--s-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pg-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  padding: var(--s-6);
+  transition: border-color 0.2s ease;
+}
+
+.pg-card:hover {
+  border-color: var(--accent);
+}
+
+.pg-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pg-card-type {
+  color: var(--accent-2);
+  transition: transform 0.2s ease;
+}
+
+.pg-card:hover .pg-card-type {
+  transform: translateY(-2px) rotate(-6deg);
+}
+
+.pg-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
+
+.pg-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-muted);
+}
+
+.pg-status-live .pg-status-dot {
+  background: var(--accent-2);
+  animation: pg-pulse 2.4s ease-in-out infinite;
+}
+
+.pg-status-building .pg-status-dot {
+  background: var(--accent);
+}
+
+@keyframes pg-pulse {
+  50% {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent-2) 25%, transparent);
+  }
+}
+
+.pg-card-title {
+  margin: 0;
+}
+
+.pg-card-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.pg-card-title a:hover {
+  color: var(--accent);
+}
+
+.pg-card-tagline {
+  color: var(--ink-muted);
+  margin: 0;
+  flex-grow: 1;
+}
+
+.pg-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pg-stack li {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 2px var(--s-2);
+}
+
+.pg-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  font-size: 0.9375rem;
+  border-top: 1px solid var(--line);
+  padding-top: var(--s-3);
+}
+
+.pg-card-story {
+  margin-left: auto;
+}
+
+.pg-empty {
+  font-family: var(--font-mono);
+  color: var(--ink-muted);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: var(--s-8);
+  text-align: center;
+}
+
+/* ---------- AI Build Meter ---------- */
+.meter {
+  display: grid;
+  gap: var(--s-1);
+}
+
+.meter-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.meter-label-ai {
+  color: var(--accent-2);
+}
+
+.meter-label-human {
+  color: var(--ink-muted);
+}
+
+.meter-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink-muted) 30%, transparent);
+  overflow: hidden;
+}
+
+.meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--accent-2),
+    var(--accent-2) 5px,
+    color-mix(in srgb, var(--accent-2) 55%, var(--bg)) 5px,
+    color-mix(in srgb, var(--accent-2) 55%, var(--bg)) 10px
+  );
+  transition: width 0.9s ease-out;
+}
+
+.meter-details summary {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  cursor: pointer;
+  padding-block: var(--s-1);
+}
+
+.meter-details summary:hover {
+  color: var(--accent);
+}
+
+.meter-details p {
+  font-size: 0.8125rem;
+  color: var(--ink-muted);
+  margin: var(--s-1) 0;
+}
+
+.meter-large .meter-bar {
+  height: 12px;
+}
+
+.meter-large .meter-labels {
+  font-size: 0.875rem;
+}
+
+.meter-large .meter-details p {
+  font-size: 0.9375rem;
+}
+
+.meter-motto {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meter-fill {
+    transition: none;
+  }
+
+  .pg-status-live .pg-status-dot {
+    animation: none;
+  }
+
+  .pg-card:hover .pg-card-type {
+    transform: none;
+  }
+}

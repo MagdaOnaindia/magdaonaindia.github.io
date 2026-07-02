@@ -1,0 +1,115 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TypeIcon from '../../components/icons/TypeIcon.astro';
+import AiBuildMeter from '../../components/projects/AiBuildMeter';
+import BuildLog from '../../components/projects/BuildLog.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+---
+
+<Base
+  title={`${data.title} — Magdalena Onaindia`}
+  description={data.tagline}
+>
+  <article class="case container">
+    <a class="case-back" href="/#projects">← All projects</a>
+    <header class="case-header">
+      <p class="section-kicker">
+        <TypeIcon type={data.type} size={16} />
+        {data.type.replace('-', ' ')} · {data.year} · {data.status}
+      </p>
+      <h1>{data.title}</h1>
+      <p class="case-tagline">{data.tagline}</p>
+      <AiBuildMeter client:visible {...data.ai} size="large" />
+      <div class="case-links">
+        {data.links.live && <a class="btn btn-primary" href={data.links.live}>Visit live ↗</a>}
+        {data.links.repo && <a class="btn btn-ghost" href={data.links.repo}>View code ↗</a>}
+      </div>
+    </header>
+
+    <BuildLog log={data.buildLog} />
+
+    <div class="case-body">
+      <Content />
+    </div>
+
+    <footer class="case-footer">
+      <a href="/#projects">← Back to all projects</a>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .case {
+    padding-block: 7rem var(--s-16);
+    max-width: 780px;
+  }
+
+  .case-back {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+
+  .case-back:hover {
+    text-decoration: underline;
+  }
+
+  .case-header {
+    margin-block: var(--s-6) var(--s-8);
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .case-header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .case-header .section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    margin: 0;
+  }
+
+  .case-tagline {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .case-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    margin-top: var(--s-2);
+  }
+
+  .case-body :global(h2) {
+    margin-top: var(--s-12);
+    font-size: 1.5rem;
+  }
+
+  .case-body :global(li) {
+    margin-bottom: var(--s-2);
+  }
+
+  .case-footer {
+    margin-top: var(--s-16);
+    border-top: 1px solid var(--line);
+    padding-top: var(--s-6);
+  }
+</style>

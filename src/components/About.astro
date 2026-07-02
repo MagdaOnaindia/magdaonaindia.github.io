@@ -1,0 +1,88 @@
+---
+import Logo from './Logo.astro';
+---
+
+<section id="about" class="section" aria-labelledby="about-title">
+  <div class="container about-grid">
+    <div>
+      <p class="section-kicker">the story</p>
+      <h2 id="about-title">About</h2>
+      <p>
+        I grew up in <span lang="es">Bilbao</span> and studied electronic engineering at the
+        University of the Basque Country — my thesis taught an NVIDIA JetBot to harvest crops with
+        computer vision. Then I went deep into .NET: document protection at a cybersecurity company
+        in Bilbao, then critical infrastructure for the public sector — health, justice and
+        emergency services.
+      </p>
+      <p>
+        Somewhere between a master's degree and a home server, the job title stopped fitting. Now I
+        build products end to end: I write the spec, direct AI agents through the implementation,
+        and ship to a self-hosting platform I built myself. Engineer by training, product builder
+        by compulsion.
+      </p>
+      <ul class="facts">
+        <li>
+          <span class="fact-label">Languages</span>
+          Basque &amp; Spanish (native) · English (C1) ·
+          <a href="/projects/deutschmeister/">German (B1 in progress — see DeutschMeister)</a>
+        </li>
+        <li>
+          <span class="fact-label">Day job</span>
+          .NET software engineer — Blazor, ASP.NET Core, the works
+        </li>
+        <li>
+          <span class="fact-label">After hours</span>
+          AI agents, my tower, and whatever the next spec says
+        </li>
+      </ul>
+    </div>
+    <div class="about-mark" aria-hidden="true">
+      <Logo size={180} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--s-12);
+    align-items: center;
+  }
+
+  .about-mark {
+    color: var(--line);
+    transition: color 0.4s ease;
+  }
+
+  .about-mark:hover {
+    color: var(--accent);
+  }
+
+  .facts {
+    list-style: none;
+    margin: var(--s-6) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--s-3);
+  }
+
+  .fact-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 860px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-mark {
+      display: none;
+    }
+  }
+</style>

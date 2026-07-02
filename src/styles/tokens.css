@@ -1,0 +1,55 @@
+/* ============================================
+   Design tokens — "Bilbao duotone"
+   Light = Egun on (day) · Dark = Gau on (night)
+   ============================================ */
+
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #faf9f7;
+  --bg-raised: #ffffff;
+  --ink: #1c1e22;
+  --ink-muted: #565a60;
+  --accent: #b93a28; /* óxido de Bilbao La Vieja — AA on --bg */
+  --accent-2: #2d6a4f; /* monte Artxanda */
+  --line: #e4e1db;
+
+  --focus-ring: 2px solid var(--accent);
+
+  /* type */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* spacing (4/8 rhythm) */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-6: 1.5rem;
+  --s-8: 2rem;
+  --s-12: 3rem;
+  --s-16: 4rem;
+  --s-24: 6rem;
+
+  --container: 1100px;
+  --radius: 6px;
+
+  /* z-scale */
+  --z-nav: 40;
+  --z-palette: 100;
+  --z-toast: 1000;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0f1216;
+  --bg-raised: #171b21;
+  --ink: #e8e6e1;
+  --ink-muted: #a3a8ae;
+  --accent: #e8705c; /* óxido, aclarado para AA sobre fondo oscuro */
+  --accent-2: #6db48c;
+  --line: #262b33;
+}

@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Skyline from '../components/Skyline.astro';
+---
+
+<Base title="404 — Magdalena Onaindia" description="Page not found.">
+  <section class="lost">
+    <div class="container lost-copy">
+      <p class="section-kicker">404</p>
+      <h1><span lang="eu" title="“It's not here” in Basque">Ez dago hemen.</span></h1>
+      <p>This page doesn't exist — or the tower unplugged it.</p>
+      <a class="btn btn-primary" href="/">Back to the ría</a>
+    </div>
+    <Skyline />
+  </section>
+</Base>
+
+<style>
+  .lost {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 92vh;
+    min-height: 92dvh;
+    padding-top: 6rem;
+    gap: var(--s-8);
+  }
+</style>

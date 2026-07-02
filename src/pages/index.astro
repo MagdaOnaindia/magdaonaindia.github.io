@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/hero/Hero.astro';
+import HowIBuild from '../components/HowIBuild.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import ProjectGrid from '../components/projects/ProjectGrid';
+
+const projects = (await getCollection('projects'))
+  .toSorted((a, b) => a.data.order - b.data.order)
+  .map(({ id, data }) => ({
+    slug: id,
+    title: data.title,
+    tagline: data.tagline,
+    year: data.year,
+    type: data.type,
+    status: data.status,
+    stack: data.stack,
+    links: data.links,
+    ai: data.ai,
+  }));
+---
+
+<Base>
+  <Hero />
+
+  <section id="projects" class="section" aria-labelledby="projects-title">
+    <div class="container">
+      <p class="section-kicker">the portfolio</p>
+      <h2 id="projects-title">Things I build</h2>
+      <p class="projects-intro">
+        Products, platforms and experiments — most of them built with AI agents, all of them
+        real. Each card shows its <strong>build recipe</strong>: how much was AI-assisted, and
+        what only a human could do.
+      </p>
+      <ProjectGrid client:visible projects={projects} />
+    </div>
+  </section>
+
+  <HowIBuild />
+  <About />
+  <Contact />
+</Base>
+
+<style>
+  .projects-intro {
+    color: var(--ink-muted);
+    margin-bottom: var(--s-8);
+  }
+</style>

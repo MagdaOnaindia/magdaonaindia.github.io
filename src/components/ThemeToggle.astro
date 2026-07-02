@@ -1,0 +1,91 @@
+<button id="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
+  <svg
+    class="icon-sun"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4.5"></circle>
+    <path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8"
+    ></path>
+  </svg>
+  <svg
+    class="icon-moon"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M20 14.5 A8.5 8.5 0 1 1 9.5 4 A7 7 0 0 0 20 14.5 Z"></path>
+  </svg>
+</button>
+
+<style>
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: var(--radius);
+  }
+
+  button:hover {
+    color: var(--accent);
+  }
+
+  :global([data-theme='light']) .icon-moon,
+  :global([data-theme='dark']) .icon-sun {
+    display: none;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('theme-toggle')!;
+
+  const apply = (theme: 'light' | 'dark') => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('theme', theme);
+    sync();
+  };
+
+  const sync = () => {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    btn.setAttribute('aria-pressed', String(dark));
+    btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+  };
+
+  btn.addEventListener('click', () => {
+    apply(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+  });
+
+  // The command palette sets themes too ('system' clears the override).
+  window.addEventListener('app:settheme', (e) => {
+    const want = (e as CustomEvent<string>).detail;
+    if (want === 'system') {
+      localStorage.removeItem('theme');
+      document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light';
+      sync();
+    } else {
+      apply(want as 'light' | 'dark');
+    }
+  });
+
+  sync();
+</script>

@@ -1,0 +1,81 @@
+---
+import Logo from './Logo.astro';
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <button id="footer-logo" type="button" aria-label="Magdalena Onaindia monogram">
+      <Logo size={28} />
+    </button>
+    <p class="tagline">
+      Made in <span lang="es">Bilbao</span> · Hosted from my own tower
+    </p>
+    <ul class="social">
+      <li><a href="https://github.com/MagdaOnaindia">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/magdalenaonaindia">LinkedIn</a></li>
+      <li><a href="mailto:magdaonvi2@gmail.com">Email</a></li>
+    </ul>
+    <p class="a11y-note">Built to WCAG AA — if something's hard to use, tell me.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    padding-block: var(--s-12);
+    text-align: center;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--s-3);
+  }
+
+  #footer-logo {
+    background: none;
+    border: none;
+    color: var(--ink-muted);
+    cursor: pointer;
+    padding: var(--s-2);
+    border-radius: var(--radius);
+  }
+
+  #footer-logo:hover {
+    color: var(--accent);
+  }
+
+  .tagline {
+    font-family: var(--font-display);
+    margin: 0;
+  }
+
+  .social {
+    display: flex;
+    gap: var(--s-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .a11y-note {
+    color: var(--ink-muted);
+    font-size: 0.8125rem;
+    margin: var(--s-2) 0 0;
+  }
+</style>
+
+<script>
+  // Easter egg: 5 clicks on the monogram. Aupa. Never explained.
+  let clicks = 0;
+  let reset: ReturnType<typeof setTimeout>;
+  document.getElementById('footer-logo')?.addEventListener('click', () => {
+    clearTimeout(reset);
+    reset = setTimeout(() => (clicks = 0), 2000);
+    if (++clicks === 5) {
+      clicks = 0;
+      window.dispatchEvent(new CustomEvent('app:toast', { detail: 'Aupa! 🔴⚪' }));
+    }
+  });
+</script>
