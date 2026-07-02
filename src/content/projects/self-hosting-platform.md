@@ -10,7 +10,6 @@ stack: ['.NET 8', 'gRPC', 'mTLS', 'Docker', 'Traefik', 'Caddy', 'Ansible', 'Blaz
 links:
   repo: 'https://github.com/MagdaOnaindia/tfm-selfhosting'
 ai:
-  # TODO(magda): confirm the AI-assist estimate
   assist: 50
   tools: ['Claude Code', 'CLAUDE.md-driven repo']
   human: 'The tunnel architecture, the mTLS trust model, and every deployment decision.'

@@ -10,7 +10,6 @@ stack: ['Next.js', 'TypeScript', 'Drizzle', 'PostgreSQL', 'Docker']
 links:
   live: 'https://travelapp.magdaselfhosting.com'
 ai:
-  # TODO(magda): confirm the AI-assist estimate
   assist: 80
   tools: ['Claude Code', 'spec-driven workflow', 'AI audit reports']
   human: 'The product spec, the permission model, and saying no to every feature outside the MVP.'

@@ -10,7 +10,6 @@ stack: ['React 18', 'TypeScript', 'Vite', 'Tailwind', 'ASP.NET Core 8', 'Postgre
 links:
   live: 'https://deutschmeister.magdaselfhosting.com'
 ai:
-  # TODO(magda): confirm the AI-assist estimate
   assist: 65
   tools: ['Claude Code']
   human: 'The Clean Architecture layering, the grammar curriculum, and daily dogfooding as its only demanding user.'
