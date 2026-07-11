@@ -3,7 +3,7 @@ title: 'DeutschMeister'
 tagline: "I'm learning German. So I built my own B2 grammar coach."
 year: 2025
 featured: false
-order: 2
+order: 3
 type: 'product'
 status: 'live'
 stack: ['React 18', 'TypeScript', 'Vite', 'Tailwind', 'ASP.NET Core 8', 'PostgreSQL']

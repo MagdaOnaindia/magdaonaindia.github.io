@@ -3,7 +3,7 @@ title: 'TravelApp'
 tagline: 'Group trips without the Excel + WhatsApp + Google Docs chaos.'
 year: 2026
 featured: false
-order: 3
+order: 4
 type: 'product'
 status: 'building'
 stack: ['Next.js', 'TypeScript', 'Drizzle', 'PostgreSQL', 'Docker']
