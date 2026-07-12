@@ -7,6 +7,8 @@ order: 2
 type: 'product'
 status: 'building'
 stack: ['Next.js 15', 'NestJS', 'TypeScript', 'Prisma', 'PostgreSQL', 'Stripe Connect', 'Tailwind v4', 'Turborepo']
+links:
+  repo: 'https://github.com/MagdaOnaindia/restaurant-manager'
 ai:
   assist: 90
   tools: ['Claude Code', 'phase-gated plan', 'e2e-first verification', 'Playwright-checked UI']
